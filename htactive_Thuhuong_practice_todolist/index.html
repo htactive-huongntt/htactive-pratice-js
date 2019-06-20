@@ -30,12 +30,33 @@
                 <h2>ToDo List</h2>
                 <div class="row input-area">
 
-                    <div class="form-group col-md-9">
-                        <input type="text" placeholder="New Task" class="form-control" id="addTask">
+                    <div class="form-group col-md-9" sryle=" margin-left: 0px, padding-left:0px">
+                        <input type="text" sryle=" margin-left: 0px, padding-left:0px" class="form-control" id="addTask">
+                        <input id="idtemp" sryle=" margin-left: 0px, padding-left:0px" style="display: none">
                     </div>
+
                     <div class="form-group col-md-1">
-                        <button class="btn btn-primary" onclick="toDo.addTaskClick()">Add</button>
+                        <button id="addItem" class="btn btn-primary" style="display: block" onclick="toDo.addTaskClick()"> Add an Item</button>
+                        <button id="updateItem" class="btn btn-info" style="display: none" onclick="toDo.updateTaskClick()"> Update Item</button>
                     </div>
+                    <div class="form-group col-md-12" style="padding: 0px 0px 0px 0px">
+                        <div class="form-group col-md-4">
+                            <button class="btn btn-danger" style="width: 200px; heigth: auto; margin-left: 0px, padding-left: 0px" onclick="toDo.showCompleted()"> Completed Tasks</button>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button class="btn btn-success" style="width: 200px; heigth: auto; margin-left: 0px, padding-left: 0px" onclick="toDo.showctiveTask()"> Active Tasks</button>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button class="btn btn-warning" style="width: 200px; heigth: auto; margin-left: 0px, padding-left: 0px" onclick="toDo.selectAll()"> Select All Items</button>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning progress-bar-striped" id="checkline"></div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <ul class="list-group" id="taskList"></ul>
@@ -47,10 +68,11 @@
     </div>
 
     <!-- /.container -->
-
     <!-- jQuery -->
-    <script src="js.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js.js"></script>
+
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
