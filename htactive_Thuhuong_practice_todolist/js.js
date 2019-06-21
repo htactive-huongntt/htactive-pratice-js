@@ -71,20 +71,22 @@ class ToDoClass {
             this.loadTasks();
             var btn = document.createElement("button");
             btn.innerHTML = "undo";
-            document.body.appendChild(btn); 
+            document.body.appendChild(btn);
             btn.setAttribute("onclick", "toDo.unDo()");
-            btn.setAttribute("style", "background: #ff7842; margin-left: 50%; width: 200px; heigth: auto;");
+            btn.setAttribute(
+                "style",
+                "background: #ff7842; margin-left: 50%; width: 200px; heigth: auto;"
+            );
             setTimeout(function() {
-            btn.remove();
+                btn.remove();
             }, 3000);
-            }
         }
-    
+    }
+
     unDo() {
-    this.tasks.push(this.perform);
-    console.log(this.perform);
-    localStorage.setItem("tasks", JSON.stringify(this.tasks));
-    this.loadTasks();
+        this.tasks.push(this.perform);
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+        this.loadTasks();
     }
 
     updateTodo(eventupdate, id) {
@@ -161,9 +163,13 @@ class ToDoClass {
             <li class="list-group-item checkbox">
             <div class="row">
                 <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 checkbox">
-                <label><input id="toggleTaskStatus" type="checkbox" onchange="toDo.completeTodo(${index})" value="" class="" ${task.isComplete ? "checked" : "" }></label>
+                <label><input id="toggleTaskStatus" type="checkbox" onchange="toDo.completeTodo(${index})" value="" class="" ${
+      task.isComplete ? "checked" : ""
+    }></label>
                 </div>
-                <div class="col-md-10 col-xs-10 col-lg-10 col-sm-10 task-text ${task.isComplete ? "complete" : ""}">${task.task}</div>
+                <div class="col-md-10 col-xs-10 col-lg-10 col-sm-10 task-text ${
+                  task.isComplete ? "complete" : ""
+                }">${task.task}</div>
                 <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
                 <i href="" onClick="toDo.updateTodo(event, ${index})" class="fa fa-pencil-square-o" aria-hidden="true" style="listStyleType: none; margin-right: 8px"> </i> 
                 <i href="" onClick="toDo.deleteTodo(event, ${index})" class="fa fa-trash" aria-hidden="true" style="listStyleType: none;"> </i>
@@ -188,9 +194,19 @@ class ToDoClass {
                     counter = counter + 1;
                 }
             });
-            document.getElementById("checkline").style.width =
-                (counter / this.tasks.length) * 100 + "%";
-            console.log((counter / this.tasks.length) * 100 + " %");
+            if ((counter / this.tasks.length) * 100 <= 30 && (counter / this.tasks.length) * 100 > 0) {
+                document.getElementById("checkline").style.width =(counter / this.tasks.length) * 100 + "%";
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-info progress-bar-striped");
+            } else if ((counter / this.tasks.length) * 100 >= 30 &&(counter / this.tasks.length) * 100 <= 50) {
+                document.getElementById("checkline").style.width =(counter / this.tasks.length) * 100 + "%";
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-warning progress-bar-striped");
+            }else if ((counter / this.tasks.length) * 100 > 50 &&(counter / this.tasks.length) * 100 <= 80) {
+                document.getElementById("checkline").style.width =(counter / this.tasks.length) * 100 + "%";
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-danger progress-bar-striped");
+            }else{
+                document.getElementById("checkline").style.width =(counter / this.tasks.length) * 100 + "%";
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-success progress-bar-striped");
+            }
         } else {
             this.tasks = [{ task: "work with dog", isCompleted: false }];
             localStorage.setItem("tasks", JSON.stringify(this.tasks));
@@ -203,4 +219,3 @@ let toDo;
 window.addEventListener("load", () => {
     toDo = new ToDoClass();
 });
-//

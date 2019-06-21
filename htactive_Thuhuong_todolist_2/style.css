@@ -1,0 +1,56 @@
+body {
+    padding-top: 50px;
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.content-area {
+    margin: 30px;
+}
+
+.input-area {
+    margin: 0px 0px 0px 5px;
+}
+
+.task-text {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.hidden {
+    display: none;
+}
+
+.delete-icon-area {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.delete-icon {
+    color: red;
+}
+
+.completed {
+    text-decoration: line-through;
+    background-color: #e8ea91;
+    font-style: italic;
+}
+
+.fa:hover {
+    color: red;
+    width: 20px;
+    height: 20px;
+}
+
+.list-group-item:hover {
+    background-color: #efe9e9;
+}
+
+.checkpercent {
+    display: flex;
+}
