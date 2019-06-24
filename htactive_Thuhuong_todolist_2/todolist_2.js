@@ -81,7 +81,8 @@ class ToDoClass {
             btn.innerHTML = "undo";
             document.body.appendChild(btn);
             btn.setAttribute("onclick", "toDolist.unDo("+index+")");
-            btn.setAttribute("style", "background: #ff7842; margin-left: 50%; width: 200px; heigth: auto;");
+            btn.setAttribute("style", "margin-left: 50%; width: 200px; heigth: auto;");
+            btn.setAttribute("class", "btn btn-warning");
             setTimeout(function() {
                 btn.remove();
             }, 3000);
