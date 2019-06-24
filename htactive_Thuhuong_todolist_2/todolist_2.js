@@ -1,6 +1,7 @@
 class ToDoClass {
     constructor() {
         this.perform = [];
+        let timeout;
         this.tasks = JSON.parse(localStorage.getItem("ThisTasks")) || [];
         this.loadTasks();
         this.addEventListener();
@@ -90,9 +91,9 @@ class ToDoClass {
             document.getElementById("updateItem").style.display = "none";
             document.getElementById("undobtn").style.display = "block";
             document.getElementById("addTask").value = "";
-            setTimeout(function() {
+            timeout = setTimeout(function() {
                 document.getElementById("undobtn").style.display = "none";
-            }, 3000);
+            }, 5000);
         }
     }
 
@@ -102,14 +103,13 @@ class ToDoClass {
         this.tasks.map(el => {
             if (el.task === this.perform.task) {
                 fixPoint = 1;
-                console.log(this.perform.task);
             }
         });
-
         if (fixPoint != 1) {
             this.tasks.splice(index, 0, this.perform);
             localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
             this.loadTasks();
+            clearTimeout(timeout);
         }
     }
 
@@ -231,40 +231,17 @@ class ToDoClass {
                     counter = counter + 1;
                 }
             });
-            if (
-                (counter / this.tasks.length) * 100 <= 30 &&
-                (counter / this.tasks.length) * 100 > 0
-            ) {
-                document
-                    .getElementById("checkline")
-                    .setAttribute("class", "progress-bar bg-info progress-bar-striped");
+            if ((counter / this.tasks.length) * 100 <= 30 &&(counter / this.tasks.length) * 100 > 0) {
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-info progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#17a2b8";
-            } else if (
-                (counter / this.tasks.length) * 100 >= 30 &&
-                (counter / this.tasks.length) * 100 <= 50
-            ) {
-                document
-                    .getElementById("checkline")
-                    .setAttribute(
-                        "class",
-                        "progress-bar bg-warning progress-bar-striped"
-                    );
+            } else if ((counter / this.tasks.length) * 100 >= 30 &&(counter / this.tasks.length) * 100 <= 50) {
+                document.getElementById("checkline").setAttribute("class","progress-bar bg-warning progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#ffc107";
-            } else if (
-                (counter / this.tasks.length) * 100 > 50 &&
-                (counter / this.tasks.length) * 100 <= 80
-            ) {
-                document
-                    .getElementById("checkline")
-                    .setAttribute("class", "progress-bar bg-danger progress-bar-striped");
+            } else if ((counter / this.tasks.length) * 100 > 50 &&(counter / this.tasks.length) * 100 <= 80 ) {
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-danger progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#dc3545";
             } else {
-                document
-                    .getElementById("checkline")
-                    .setAttribute(
-                        "class",
-                        "progress-bar bg-success progress-bar-striped"
-                    );
+                document .getElementById("checkline").setAttribute("class","progress-bar bg-success progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#28a745";
             }
             document.getElementById("checkline").style.width =
