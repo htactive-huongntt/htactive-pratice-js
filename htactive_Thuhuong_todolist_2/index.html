@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -20,7 +19,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container">
 
         <div class="content-area row">
@@ -34,15 +32,17 @@
                         <input type="text" sryle=" margin-left: 0px, padding-left:0px" class="form-control" id="addTask">
                         <input id="idtemp" sryle=" margin-left: 0px, padding-left:0px" style="display: none">
                         <input id="tasktemp" sryle=" margin-left: 0px, padding-left:0px" style="display: none">
+                        <input id="indexUndo" sryle=" margin-left: 0px, padding-left:0px" style="display: none">
                     </div>
                     <div class="form-group col-md-1">
                         <button id="addItem" class="btn btn-primary" style="display: block" onclick="toDolist.addTaskClick()"> Add an Item</button>
                         <button id="updateItem" class="btn btn-info" style="display: none" onclick="toDolist.updateTaskClick()"> Update Item</button>
                     </div>
                     <div class="form-group col-md-12" style="padding: 0px 0px 0px 12px">
-                        <button class="btn btn-danger" style="width: 180px; height: auto;" onclick="toDolist.showCompleted()"> Show Completed Tasks</button>
-                        <button class="btn btn-success" style="width: 180px; height: auto;" onclick="toDolist.showctiveTask()"> Hide Completed Tasks</button>
-                        <button class="btn btn-warning" style="width: 180px; height: auto;" onclick="toDolist.selectAll()"> Select All Items</button>
+                        <button class="btn btn-danger" style="width: 150px; height: auto; text-align: center" onclick="toDolist.showCompleted()"> Show Completed <br> Tasks</button>
+                        <button class="btn btn-success" style="width: 150px; height: auto;" onclick="toDolist.showctiveTask()"> Hide Completed <br> Tasks</button>
+                        <button class="btn btn-warning" style="width: 150px; height: auto;" onclick="toDolist.selectedAll()"> Completed All <br>Tasks</button>
+                        <button class="btn btn-info" style="width: 150px; height: auto;" onclick="toDolist.showAll()"> Show All<br> Tasks</button>
                     </div>
                     <div class="form-group col-md-12" style="display: flex;">
 
@@ -54,9 +54,6 @@
                                 <div class="progress-bar bg-warning progress-bar-striped" id="checkline"></div>
                             </div>
                         </div>
-
-
-
                     </div>
 
                 </div>
@@ -65,6 +62,8 @@
             </div>
 
             <div class="col-md-2 col-xs-2 col-lg-2 col-sm-2"></div>
+            <button class="btn btn-warning" style="width: 150px; height: auto;margin-left: 50%; margin-top: 80px; display:none" id="undobtn" onclick="toDolist.unDo()"> Undo</button>
+
         </div>
 
     </div>
@@ -80,4 +79,4 @@
 
 </body>
 
-</html>
+</html>s
