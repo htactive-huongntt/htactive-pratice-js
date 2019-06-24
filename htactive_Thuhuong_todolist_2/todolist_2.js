@@ -110,7 +110,8 @@ class ToDoClass {
             localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
             this.loadTasks();
             clearTimeout(timeout);
-        }
+            document.getElementById("undobtn").style.display = "none";
+        } 
     }
 
     updateTodo(eventupdate, idtask) {
@@ -244,13 +245,12 @@ class ToDoClass {
                 document .getElementById("checkline").setAttribute("class","progress-bar bg-success progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#28a745";
             }
-            document.getElementById("checkline").style.width =
-                (counter / this.tasks.length) * 100 + "%";
+            document.getElementById("checkline").style.width = (counter / this.tasks.length) * 100 + "%";
             let per = Math.floor((counter / this.tasks.length) * 100);
             document.getElementById("percent").innerHTML = per + "%";
         } else {
             this.tasks = [
-                { id: "11aaa22bbb", task: "work with dog", isCompleted: false }
+                { id: "11aaa22bbb", task: "Creating a map", isCompleted: false }
             ];
             localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
             this.loadTasks();
