@@ -35,7 +35,7 @@ body {
     color: red;
 }
 
-.complete {
+.completed {
     text-decoration: line-through;
     background-color: #e8ea91;
     font-style: italic;
@@ -49,4 +49,8 @@ body {
 
 .list-group-item:hover {
     background-color: #efe9e9;
+}
+
+.checkpercent {
+    display: flex;
 }
