@@ -1,8 +1,10 @@
 class ToDoClass {
     constructor() {
         this.perform = [];
-        let timeout;
-        this.tasks = JSON.parse(localStorage.getItem("ThisTasks")) || [];
+        this.timeout;
+        this.tasks = JSON.parse(localStorage.getItem("ThisTasks")) || [
+            { id: "11aaa22bbb", task: "Creating a map", isCompleted: false }
+        ];
         this.loadTasks();
         this.addEventListener();
         localStorage.setItem("status", JSON.stringify(false));
@@ -18,10 +20,8 @@ class ToDoClass {
     }
 
     completeTodo(idtask) {
-        this.tasks.find(t => t.id == idtask).isCompleted = !this.tasks.find(
-            t => t.id == idtask
-        ).isCompleted;
-        localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
+        var currTask = this.tasks.find(t => t.id == idtask);
+        currTask.isCompleted = !currTask.isCompleted;
         this.loadTasks();
     }
 
@@ -29,102 +29,84 @@ class ToDoClass {
         if (newtask === null) {
             alert("Please enter data !");
         } else {
-            let check = 0;
-            this.tasks.map(el => {
-                if (el.task === newtask) {
-                    alert("This task already exists !");
-                    check = 1;
-                }
-            });
-            if (check != 1) {
+            const check = this.tasks.some(currTask => currTask.task === newtask);
+            if (!check) {
                 let taskTemp = {
                     id: this.randomId(),
                     task: newtask,
                     isCompleted: false
                 };
                 this.tasks.push(taskTemp);
-                localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
                 this.loadTasks();
             }
         }
     }
 
     showAll() {
+        document.getElementById("showComplete").setAttribute("class", "btn btn-default");
+        document.getElementById("completeAll").setAttribute("class", "btn btn-default");
+        document.getElementById("showAll").setAttribute("class", "btn btn-success");
+        document.getElementById("hideComplete").setAttribute("class", "btn btn-default");
         this.loadTasks();
     }
 
     selectedAll() {
-        console.log(JSON.parse(localStorage.getItem("status")));
-
-        if (JSON.parse(localStorage.getItem("status")) === false) {
-            this.tasks.forEach(element => {
-                element.isCompleted = true;
-            });
-            localStorage.setItem("status", JSON.stringify(true));
-        } else if (JSON.parse(localStorage.getItem("status")) === true) {
-            this.tasks.forEach(element => {
-                element.isCompleted = false;
-            });
-            localStorage.setItem("status", JSON.stringify(false));
-        } else {
-            this.tasks.forEach(element => {
-                element.isCompleted = true;
-            });
-            localStorage.setItem("status", JSON.stringify(true));
-        }
-        localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
+        document.getElementById("taskList").setAttribute("style", "color: black");
+        document.getElementById("showComplete").setAttribute("class", "btn btn-default");
+        document.getElementById("completeAll").setAttribute("class", "btn btn-success");
+        document.getElementById("showAll").setAttribute("class", "btn btn-default");
+        document.getElementById("hideComplete").setAttribute("class", "btn btn-default");
+        let localStatus = JSON.parse(localStorage.getItem("status"));
+        this.tasks.forEach(element => {
+            element.isCompleted = !localStatus;
+        });
+        localStorage.setItem("status", JSON.stringify(!localStatus));
         this.loadTasks();
     }
 
     deleteTodo(event, idtask) {
+        clearTimeout(this.timeout);
         let confi = confirm("Do you wanna delete this Item !");
-
-        if (confi == true) {
-            event.preventDefault();
-            this.perform = this.tasks.find(t => t.id == idtask);
-            document.getElementById("indexUndo").value = this.tasks.findIndex(t => t.id == idtask);
-            this.tasks.splice(this.tasks.findIndex(t => t.id == idtask), 1);
-            localStorage.clear();
-            localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
+        if (confi === true) {
+            var currIndex = this.tasks.findIndex(t => t.id == idtask);
+            this.perform = {
+                task: this.tasks[currIndex],
+                index: currIndex
+            };
+            document.getElementById("indexUndo").value = currIndex;
+            this.tasks.splice(currIndex, 1);
             this.loadTasks();
             document.getElementById("addItem").style.display = "block";
             document.getElementById("updateItem").style.display = "none";
             document.getElementById("undobtn").style.display = "block";
             document.getElementById("addTask").value = "";
-            timeout = setTimeout(function() {
+            this.timeout = setTimeout(() => {
                 document.getElementById("undobtn").style.display = "none";
             }, 5000);
         }
     }
 
     unDo() {
-        let index = document.getElementById("indexUndo").value;
-        let fixPoint = 0;
-        this.tasks.map(el => {
-            if (el.task === this.perform.task) {
-                fixPoint = 1;
-            }
-        });
-        if (fixPoint != 1) {
-            this.tasks.splice(index, 0, this.perform);
+        const check = this.tasks.some(
+            currTask => currTask.id === this.perform.task.id
+        );
+
+        if (!check) {
+            this.tasks.splice(this.perform.index, 0, this.perform.task);
             localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
             this.loadTasks();
-            clearTimeout(timeout);
+            clearTimeout(this.timeout);
             document.getElementById("undobtn").style.display = "none";
-        } 
+        }
     }
 
     updateTodo(eventupdate, idtask) {
-        console.log(this.tasks.find(t => t.id == idtask).task);
+        var currTask = this.tasks.find(t => t.id == idtask).task;
         document.getElementById("addItem").style.display = "none";
         document.getElementById("updateItem").style.display = "block";
-        document.getElementById("addTask").value = this.tasks.find(
-            t => t.id == idtask
-        ).task;
+        document.getElementById("addTask").value = currTask;
         document.getElementById("idtemp").value = idtask;
-        document.getElementById("tasktemp").value = this.tasks.find(
-            t => t.id == idtask
-        ).task;
+        document.getElementById("tasktemp").value = currTask;
     }
 
     updateTaskClick() {
@@ -134,9 +116,9 @@ class ToDoClass {
         if (compareValue === target) {
             alert("This task is not changed!");
         } else {
-            this.tasks.find(t => t.id == updateId).task = target;
-            this.tasks.find(t => t.id == updateId).isCompleted = false;
-            localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
+            var taskUpdate = this.tasks.find(t => t.id == updateId);
+            taskUpdate.task = target;
+            taskUpdate.isCompleted = false;
             this.loadTasks();
             document.getElementById("addItem").style.display = "block";
             document.getElementById("updateItem").style.display = "none";
@@ -146,60 +128,52 @@ class ToDoClass {
 
     addTaskClick() {
         let target = document.getElementById("addTask").value;
-        if (target === "") {
-            alert("Please enter data !");
-        } else {
-            this.addTask(target);
-        }
+        if (target === "") alert("Please enter data !");
+        this.addTask(target);
         document.getElementById("addTask").value = "";
     }
 
-    showCompleted() {
-        let completedtask = [];
-        this.tasks.map(el => {
-            if (el.isCompleted === true) {
-                completedtask.push(el);
-            }
-        });
+    checkTaskStatus(element, status) {
+        return element.isCompleted === status;
+    }
 
+    showCompleted() {
+        document.getElementById("showComplete").setAttribute("class", "btn btn-success");
+        document.getElementById("completeAll").setAttribute("class", "btn btn-default");
+        document.getElementById("showAll").setAttribute("class", "btn btn-default");
+        document.getElementById("hideComplete").setAttribute("class", "btn btn-default");
+        var completedtask = this.tasks.filter(t => this.checkTaskStatus(t, true));
         if (completedtask.length > 0) {
-            let taskHtml = completedtask.reduce(
-                (html, task, index) => (html += this.generateTaskHtml(task)),
-                ""
-            );
+            document.getElementById("taskList").setAttribute("style", "color: black");
+            let taskHtml = completedtask.reduce((html, task, index) => (html += this.generateTaskHtml(task)), "");
             document.getElementById("taskList").innerHTML = taskHtml;
         } else {
-            document.getElementById("taskList").innerHTML =
-                "You haven't completed any task yet!!!";
+            document.getElementById("taskList").innerHTML = "You haven't completed any task yet!!!";
+            document.getElementById("taskList").setAttribute("style", "color: white");
         }
     }
 
     randomId() {
         let text = "";
-        let possible =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         for (let i = 0; i < 10; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         return text;
     }
 
-    showctiveTask() {
-        let completedtask = [];
-        this.tasks.map(el => {
-            if (el.isCompleted === false) {
-                completedtask.push(el);
-            }
-        });
-
+    showActiveTask() {
+        document.getElementById("showComplete").setAttribute("class", "btn btn-default");
+        document.getElementById("completeAll").setAttribute("class", "btn btn-default");
+        document.getElementById("showAll").setAttribute("class", "btn btn-default");
+        document.getElementById("hideComplete").setAttribute("class", "btn btn-success");
+        var completedtask = this.tasks.filter(t => this.checkTaskStatus(t, false));
         if (completedtask.length > 0) {
-            let taskHtml = completedtask.reduce(
-                (html, task, index) => (html += this.generateTaskHtml(task)),
-                ""
-            );
+            document.getElementById("taskList").setAttribute("style", "color: black");
+            let taskHtml = completedtask.reduce((html, task, index) => (html += this.generateTaskHtml(task)),"");
             document.getElementById("taskList").innerHTML = taskHtml;
         } else {
-            document.getElementById("taskList").innerHTML =
-                "You have done all tasks !!!";
+            document.getElementById("taskList").innerHTML = "You have completed all tasks!!!";
+            document.getElementById("taskList").setAttribute("style", "color: white");
         }
     }
 
@@ -219,41 +193,29 @@ class ToDoClass {
     }
 
     loadTasks() {
-        this.tasks = JSON.parse(localStorage.getItem("ThisTasks"));
-        if (this.tasks != null && this.tasks.length > 0) {
-            let taskHtml = this.tasks.reduce(
-                (html, task) => (html += this.generateTaskHtml(task)),
-                ""
-            );
+        localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
+        document.getElementById("taskList").setAttribute("style", "color: black");
+
+        if (this.tasks.length > 0) {
+            let taskHtml = this.tasks.reduce((html, task) => (html += this.generateTaskHtml(task)),"");
             document.getElementById("taskList").innerHTML = taskHtml;
-            let counter = 0;
-            this.tasks.forEach(el => {
-                if (el.isCompleted === true) {
-                    counter = counter + 1;
-                }
-            });
-            if ((counter / this.tasks.length) * 100 <= 30 &&(counter / this.tasks.length) * 100 > 0) {
+            let counter = this.tasks.filter(t => t.isCompleted).length;
+            let percent = (counter / this.tasks.length) * 100;
+            if (percent <= 30 && percent > 0) {
                 document.getElementById("checkline").setAttribute("class", "progress-bar bg-info progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#17a2b8";
-            } else if ((counter / this.tasks.length) * 100 >= 30 &&(counter / this.tasks.length) * 100 <= 50) {
+            } else if (percent >= 30 && percent <= 50) {
                 document.getElementById("checkline").setAttribute("class","progress-bar bg-warning progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#ffc107";
-            } else if ((counter / this.tasks.length) * 100 > 50 &&(counter / this.tasks.length) * 100 <= 80 ) {
+            } else if (percent > 50 && percent <= 80) {
                 document.getElementById("checkline").setAttribute("class", "progress-bar bg-danger progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#dc3545";
             } else {
-                document .getElementById("checkline").setAttribute("class","progress-bar bg-success progress-bar-striped");
+                document.getElementById("checkline").setAttribute("class","progress-bar bg-success progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#28a745";
             }
-            document.getElementById("checkline").style.width = (counter / this.tasks.length) * 100 + "%";
-            let per = Math.floor((counter / this.tasks.length) * 100);
-            document.getElementById("percent").innerHTML = per + "%";
-        } else {
-            this.tasks = [
-                { id: "11aaa22bbb", task: "Creating a map", isCompleted: false }
-            ];
-            localStorage.setItem("ThisTasks", JSON.stringify(this.tasks));
-            this.loadTasks();
+            document.getElementById("checkline").style.width = percent + "%";
+            document.getElementById("percent").innerHTML = Math.floor(percent) + "%";
         }
     }
 }
