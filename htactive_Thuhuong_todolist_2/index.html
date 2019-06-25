@@ -12,20 +12,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <span class="navbar-brand">Let Start With Your To Do List !</span>
-            </div>
-        </div>
-    </nav>
     <div class="container">
-
-        <div class="content-area row">
+        <div class="content-area row" style="border: 2px solid black; padding: 8% 2% 8% 2%; background-color: black">
             <div class="col-md-2 col-xs-2 col-lg-2 col-sm-2"></div>
 
             <div class="col-md-8 col-xs-8 col-lg-8 col-sm-8">
-                <h2>Things to do for this week !!!</h2>
+                <h2 style="color:white">Things to do for this week !!!</h2>
                 <div class="row input-area">
 
                     <div class="form-group col-md-9" sryle=" margin-left: 0px, padding-left:0px">
@@ -39,10 +31,10 @@
                         <button id="updateItem" class="btn btn-info" style="display: none" onclick="toDolist.updateTaskClick()"> Update Item</button>
                     </div>
                     <div class="form-group col-md-12" style="padding: 0px 0px 0px 12px">
-                        <button class="btn btn-danger" style="width: 150px; height: auto; text-align: center" onclick="toDolist.showCompleted()"> Show Completed <br> Tasks</button>
-                        <button class="btn btn-success" style="width: 150px; height: auto;" onclick="toDolist.showctiveTask()"> Hide Completed <br> Tasks</button>
-                        <button class="btn btn-warning" style="width: 150px; height: auto;" onclick="toDolist.selectedAll()"> Completed All <br>Tasks</button>
-                        <button class="btn btn-info" style="width: 150px; height: auto;" onclick="toDolist.showAll()"> Show All<br> Tasks</button>
+                        <button class="btn btn-default" id="showComplete" style="width: 150px; height: auto; text-align: center" onclick="toDolist.showCompleted()"> Show Completed <br> Tasks</button>
+                        <button class="btn btn-default" id="hideComplete" style="width: 150px; height: auto;" onclick="toDolist.showActiveTask()"> Hide Completed <br> Tasks</button>
+                        <button class="btn btn-default" id="completeAll" style="width: 150px; height: auto;" onclick="toDolist.selectedAll()"> Completed All <br>Tasks</button>
+                        <button class="btn btn-default" id="showAll" style="width: 150px; height: auto;" onclick="toDolist.showAll()"> Show All<br> Tasks</button>
                     </div>
                     <div class="form-group col-md-12" style="display: flex;">
 

@@ -54,3 +54,7 @@ body {
 .checkpercent {
     display: flex;
 }
+
+.btn-default:hover {
+    background-color: deepskyblue;
+}
