@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>School Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="style.css" rel="stylesheet">
+    <script type="text/javascript" src="data.js"></script>
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+            </div>
+
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                <h1>School management</h1>
+                <div class="active-cyan-3 ">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                </div>
+
+                <div class="className">
+                </div>
+                <div class="infoClass">
+                    <label for="classCode"></label>
+                    <label for="homeroom"></label>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="row">
+
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+            </div>
+
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <button class="btn btn-warning" id="showComplete" style="width: 150px; height: auto; text-align: center" onclick="sc.addNewStudent()">Add New Student</button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="">
+                <button class="btn btn-warning" id="showComplete" style="width: 150px; height: auto; text-align: center" onclick="sc.showStudents()">Students</button>
+                <button class="btn btn-warning" id="hideComplete" style="width: 150px; height: auto;" onclick="sc.addTaskClick()">Classes</button>
+                <button class="btn btn-warning" id="completeAll" style="width: 150px; height: auto;" onclick="sc.showTeachers()">Teachers</button>
+                <button class="btn btn-warning" id="showAll" style="width: 150px; height: auto;" onclick="sc.addTaskClick()">Score</button>
+            </div>
+        </div>
+        <div class="row" style="margin: 3% 0% 3% 0%;" hidden id="addStudent">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label>Student name</label>
+                    <input type="text" class="form-control" id="studentName" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label>Student address</label>
+                    <input type="text" class="form-control" id="studentAddress" placeholder="Enter address">
+                </div>
+                <div class="form-group">
+                    <label>Class</label>
+                    <input type="text" class="form-control" id="studentAddress" placeholder="Enter address">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" id="studentAddress" placeholder="Enter address">
+                </div>
+                <button class="btn btn-primary">Done</button>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-top:3%">
+
+            </div>
+
+
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style=" padding: 5px;">
+                <h2>Students List</h2>
+                <table class="table table-bordered table-hover">
+                    <thead class=" thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Class</th>
+                            <th>Parent Phone</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody id="person">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding-top:3%">
+
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style=" padding: 5px;">
+                <h2>Subjects list</h2>
+                <table class="table table-bordered table-hover thead-dark">
+                    <thead class=" thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Subject Name</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subject">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <script type="text/javascript" src="school_management.js"></script>
+
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>
