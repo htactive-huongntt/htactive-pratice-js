@@ -87,9 +87,7 @@ class ToDoClass {
     }
 
     unDo() {
-        const check = this.tasks.some(
-            currTask => currTask.id === this.perform.task.id
-        );
+        const check = this.tasks.some(currTask => currTask.id === this.perform.task.id);
 
         if (!check) {
             this.tasks.splice(this.perform.index, 0, this.perform.task);
@@ -169,7 +167,7 @@ class ToDoClass {
         var completedtask = this.tasks.filter(t => this.checkTaskStatus(t, false));
         if (completedtask.length > 0) {
             document.getElementById("taskList").setAttribute("style", "color: black");
-            let taskHtml = completedtask.reduce((html, task, index) => (html += this.generateTaskHtml(task)),"");
+            let taskHtml = completedtask.reduce((html, task, index) => (html += this.generateTaskHtml(task)), "");
             document.getElementById("taskList").innerHTML = taskHtml;
         } else {
             document.getElementById("taskList").innerHTML = "You have completed all tasks!!!";
@@ -197,7 +195,7 @@ class ToDoClass {
         document.getElementById("taskList").setAttribute("style", "color: black");
 
         if (this.tasks.length > 0) {
-            let taskHtml = this.tasks.reduce((html, task) => (html += this.generateTaskHtml(task)),"");
+            let taskHtml = this.tasks.reduce((html, task) => (html += this.generateTaskHtml(task)), "");
             document.getElementById("taskList").innerHTML = taskHtml;
             let counter = this.tasks.filter(t => t.isCompleted).length;
             let percent = (counter / this.tasks.length) * 100;
@@ -205,13 +203,13 @@ class ToDoClass {
                 document.getElementById("checkline").setAttribute("class", "progress-bar bg-info progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#17a2b8";
             } else if (percent >= 30 && percent <= 50) {
-                document.getElementById("checkline").setAttribute("class","progress-bar bg-warning progress-bar-striped");
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-warning progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#ffc107";
             } else if (percent > 50 && percent <= 80) {
                 document.getElementById("checkline").setAttribute("class", "progress-bar bg-danger progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#dc3545";
             } else {
-                document.getElementById("checkline").setAttribute("class","progress-bar bg-success progress-bar-striped");
+                document.getElementById("checkline").setAttribute("class", "progress-bar bg-success progress-bar-striped");
                 document.getElementById("percent").style.backgroundColor = "#28a745";
             }
             document.getElementById("checkline").style.width = percent + "%";
