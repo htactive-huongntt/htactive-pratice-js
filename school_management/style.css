@@ -1,3 +1,24 @@
 .form-group .label {
     line-height: 50px;
 }
+
+body {
+    position: relative;
+}
+
+ul.nav-pills {
+    top: 20px;
+    position: fixed;
+}
+
+div.col-8 div {
+    height: 500px;
+}
+
+#students .tr input:hover {
+    background-color: rgba(0, 0, 0, .075);
+}
+
+.fa-pencil-square-o:hover {
+    color: blue;
+}

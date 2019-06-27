@@ -60,7 +60,6 @@ class ToDoClass {
         this.tasks.forEach(element => {
             element.isCompleted = !localStatus;
         });
-        localStorage.setItem("status", JSON.stringify(!localStatus));
         this.loadTasks();
     }
 
